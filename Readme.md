@@ -2,7 +2,7 @@
 
 ## Overview and Scope
 
-Performance Test Client Agent is a lightweight load-generating class library for use in performance testing.  It's intended to be referenced by a console application that is deployed onto a container orchestration platform.  The platform ideally should have the capability to start multiple running instances of this agent (e.g. Kubernetes pods).
+Performance Test Client Agent is a lightweight .NET Standard class library for generating load in performance testing.  The test scenarios are entirely custom: HTTP calls are one possible use-case, but not the only use-case.  It's intended to be referenced by a console application that is deployed onto a container orchestration platform.  The platform ideally should have the capability to start multiple running instances of this agent (e.g. Kubernetes pods).
 
 ## Example context architecture
 
@@ -13,6 +13,8 @@ This component is intended to be used as part of the following example set:
 4. Performance Test Results Verifier.  This is a custom unit test project that queries the monitoring database after the performance test has finished.  We query Log Analytics for metrics captured during the performance test and the "unit" tests make assertions to verify performance is as expected.
 
 This component has no dependency on Kubernetes or Service Fabric and is a simple .NET Standard class library.
+
+TBD: Diagram
 
 ## Example context usage
 
