@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +16,9 @@ namespace PerformanceTestClientAgent.Configuration
                 ? Profiles[UseProfileWithName]
                 : null;
 
-        public void WriteToConsole()
+        public void WriteTo(ILogger logger)
         {
-            Console.WriteLine("Using Profile: " + UseProfileWithName);
+            logger.LogInformation("Using Profile: " + UseProfileWithName);
 
             if (SelectedProfile == null)
             {
@@ -25,7 +26,7 @@ namespace PerformanceTestClientAgent.Configuration
                     $"Could not find profile {UseProfileWithName}. Configured profiles are:{string.Join(",", Profiles?.Select(p => p.Key))}");
             }
 
-            SelectedProfile.WriteToConsole();
+            SelectedProfile.WriteTo(logger);
         }
     }
 }

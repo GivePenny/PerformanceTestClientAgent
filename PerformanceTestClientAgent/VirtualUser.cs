@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using PerformanceTestClientAgent.Configuration;
 using PerformanceTestClientAgent.Metrics;
 using System;
@@ -13,14 +14,16 @@ namespace PerformanceTestClientAgent
         private readonly int userIndex;
         private readonly Func<ITestScenario> scenarioFactory;
         private readonly AgentMetrics metrics;
+        private readonly ILogger<TestRun> logger;
         private Int64AgentMetric exceptionCountMetric;
 
-        public VirtualUser(TestSettings settings, int userIndex, Func<ITestScenario> scenarioFactory, AgentMetrics metrics)
+        public VirtualUser(TestSettings settings, int userIndex, Func<ITestScenario> scenarioFactory, AgentMetrics metrics, ILogger<TestRun> logger)
         {
             this.settings = settings;
             this.userIndex = userIndex;
             this.scenarioFactory = scenarioFactory;
             this.metrics = metrics;
+            this.logger = logger;
         }
 
         public async Task ExecuteIterationsForUser(CancellationTokenSource cancellationTokenSource)
@@ -78,7 +81,8 @@ namespace PerformanceTestClientAgent
 
         private void HandleException(Exception exception, CancellationTokenSource cancellationTokenSource)
         {
-            Console.WriteLine(exception.ToString());
+            logger.LogWarning(exception, "Exception encountered.");
+
             var exceptionCount = exceptionCountMetric.Increment();
 
             if (exceptionCount > settings.SelectedProfile.AbortRunIfExceptionCountExceeds)

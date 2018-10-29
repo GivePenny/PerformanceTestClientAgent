@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using System;
 
 namespace PerformanceTestClientAgent.Configuration
@@ -8,11 +9,11 @@ namespace PerformanceTestClientAgent.Configuration
         public int ConcurrentUsersPerToolInstance { get; set; } = 1;
         public TimeSpan RampUpConcurrentUsersOver { get; set; } = TimeSpan.FromSeconds(10);
 
-        public void WriteToConsole()
+        public void WriteTo(ILogger logger)
         {
-            Console.WriteLine("MinimumIterationTimePerUser: " + MinimumIterationTimePerUser);
-            Console.WriteLine("ConcurrentUsersPerToolInstance: " + ConcurrentUsersPerToolInstance);
-            Console.WriteLine("RampUpConcurrentUsersOver: " + RampUpConcurrentUsersOver);
+            logger.LogInformation("MinimumIterationTimePerUser: " + ConcurrentUsersPerToolInstance);
+            logger.LogInformation("ConcurrentUsersPerToolInstance: " + ConcurrentUsersPerToolInstance);
+            logger.LogInformation("RampUpConcurrentUsersOver: " + RampUpConcurrentUsersOver);
         }
 
         public TimeSpan? DelayStartOfUser(int userIndex)

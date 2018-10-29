@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using PerformanceTestClientAgent.Configuration;
 using PerformanceTestClientAgent.Metrics;
 using System;
@@ -13,12 +14,14 @@ namespace PerformanceTestClientAgent
         private readonly TestSettings settings;
         private readonly Func<ITestScenario> scenarioFactory;
         private readonly AgentMetrics metrics;
+        private readonly ILogger<TestRun> logger;
 
-        public TestRun(TestSettings settings, Func<ITestScenario> scenarioFactory, AgentMetrics metrics)
+        public TestRun(TestSettings settings, Func<ITestScenario> scenarioFactory, AgentMetrics metrics, ILogger<TestRun> logger)
         {
             this.settings = settings;
             this.scenarioFactory = scenarioFactory;
             this.metrics = metrics;
+            this.logger = logger;
         }
 
         public async Task Execute()
@@ -32,7 +35,7 @@ namespace PerformanceTestClientAgent
                         virtualUser => virtualUser.ExecuteIterationsForUser(cancellationToken)));
             }
 
-            Console.WriteLine("All users finished run.");
+            logger.LogInformation("All users finished run.");
             metrics.ReportProgressIfDue(TimeSpan.Zero);
         }
 
@@ -42,7 +45,7 @@ namespace PerformanceTestClientAgent
             for (var userId = 0; userId < settings.SelectedProfile.ConcurrentUsers.ConcurrentUsersPerToolInstance; userId++)
             {
                 virtualUsers.Add(
-                    new VirtualUser(settings, userId, scenarioFactory, metrics));
+                    new VirtualUser(settings, userId, scenarioFactory, metrics, logger));
             }
 
             return virtualUsers;

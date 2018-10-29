@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using System;
 
 namespace PerformanceTestClientAgent.Configuration
@@ -9,12 +10,12 @@ namespace PerformanceTestClientAgent.Configuration
         public int AbortRunIfExceptionCountExceeds { get; set; } = 5;
         public ConcurrentUsersSettings ConcurrentUsers { get; } = new ConcurrentUsersSettings();
 
-        public void WriteToConsole()
+        public void WriteTo(ILogger logger)
         {
-            Console.WriteLine("RunFor: " + RunFor);
-            Console.WriteLine("ReportToConsoleEvery: " + ReportToConsoleEvery);
-            Console.WriteLine("AbortRunIfExceptionCountExceeds: " + AbortRunIfExceptionCountExceeds);
-            ConcurrentUsers.WriteToConsole();
+            logger.LogInformation("RunFor: " + RunFor);
+            logger.LogInformation("ReportToConsoleEvery: " + ReportToConsoleEvery);
+            logger.LogInformation("AbortRunIfExceptionCountExceeds: " + AbortRunIfExceptionCountExceeds);
+            ConcurrentUsers.WriteTo(logger);
         }
     }
 }

@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using PerformanceTestClientAgent.Configuration;
 using System;
 using System.Collections.Concurrent;
@@ -9,13 +10,15 @@ namespace PerformanceTestClientAgent.Metrics
     public class AgentMetrics : ConcurrentDictionary<string, IAgentMetric>
     {
         private DateTime nextReportDueUtc;
-        private TimeSpan reportEvery;
+        private readonly TimeSpan reportEvery;
         private readonly object thisLock = new object();
+        private readonly ILogger<AgentMetrics> logger;
 
-        public AgentMetrics(TestSettings settings)
+        public AgentMetrics(TestSettings settings, ILogger<AgentMetrics> logger)
         {
             reportEvery = settings.SelectedProfile.ReportToConsoleEvery;
             nextReportDueUtc = DateTime.UtcNow + reportEvery;
+            this.logger = logger;
         }
 
         public T GetOrCreate<T>(string key)
@@ -50,7 +53,7 @@ namespace PerformanceTestClientAgent.Metrics
                         .Append(this[metricKey]);
                 }
 
-                Console.WriteLine(stringBuilder.ToString());
+                logger.LogInformation(stringBuilder.ToString());
 
                 nextReportDueUtc = DateTime.UtcNow + reportEvery;
             }
