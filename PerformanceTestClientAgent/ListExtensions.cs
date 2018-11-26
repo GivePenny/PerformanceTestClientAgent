@@ -14,7 +14,7 @@ namespace PerformanceTestClientAgent
                 throw new ArgumentException("List is empty.");
             }
 
-            var randomIndex = randomNumberGenerator.Next(list.Count - 1);
+            var randomIndex = randomNumberGenerator.Next(list.Count);
             return list[randomIndex];
         }
     }
