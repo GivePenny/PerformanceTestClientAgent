@@ -26,6 +26,12 @@ namespace PerformanceTestClientAgent.Metrics
                 throw new ArgumentNullException(nameof(logger));
             }
 
+            if (settings.SelectedProfile == null)
+            {
+                throw new ArgumentException(
+                    $"The {nameof(TestSettings.UseProfileWithName)} property does not point to a configured test profile.", nameof(settings));
+            }
+
             reportEvery = settings.SelectedProfile.ReportToConsoleEvery;
             nextReportDueUtc = DateTime.UtcNow + reportEvery;
             this.logger = logger;
