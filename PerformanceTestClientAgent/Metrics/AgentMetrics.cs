@@ -16,6 +16,16 @@ namespace PerformanceTestClientAgent.Metrics
 
         public AgentMetrics(TestSettings settings, ILogger<AgentMetrics> logger)
         {
+            if (settings == null)
+            {
+                throw new ArgumentNullException(nameof(settings));
+            }
+
+            if (logger == null)
+            {
+                throw new ArgumentNullException(nameof(logger));
+            }
+
             reportEvery = settings.SelectedProfile.ReportToConsoleEvery;
             nextReportDueUtc = DateTime.UtcNow + reportEvery;
             this.logger = logger;
