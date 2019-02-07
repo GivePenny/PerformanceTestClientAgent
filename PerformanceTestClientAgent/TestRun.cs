@@ -30,9 +30,11 @@ namespace PerformanceTestClientAgent
 
             using (var cancellationToken = new CancellationTokenSource())
             {
-                await Task.WhenAll(
-                    virtualUsers.Select(
-                        virtualUser => virtualUser.ExecuteIterationsForUser(cancellationToken)));
+                await Task
+                    .WhenAll(
+                        virtualUsers.Select(
+                            virtualUser => virtualUser.ExecuteIterationsForUser(cancellationToken)))
+                    .ConfigureAwait(false);
             }
 
             logger.LogInformation("All users finished run.");

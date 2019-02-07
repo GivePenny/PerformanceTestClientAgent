@@ -45,7 +45,8 @@ namespace PerformanceTestClientAgent
 
                     try
                     {
-                        await scenario.ExecuteIteration()
+                        await scenario
+                            .ExecuteIteration()
                             .ConfigureAwait(false);
                     }
                     catch (Exception exception)
@@ -75,7 +76,9 @@ namespace PerformanceTestClientAgent
             var delayPeriod = settings.SelectedProfile.ConcurrentUsers.DelayStartOfUser(userIndex);
             if (delayPeriod.HasValue)
             {
-                await Task.Delay(delayPeriod.Value);
+                await Task
+                    .Delay(delayPeriod.Value)
+                    .ConfigureAwait(false);
             }
         }
 
