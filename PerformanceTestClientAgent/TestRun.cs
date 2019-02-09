@@ -26,6 +26,8 @@ namespace PerformanceTestClientAgent
 
         public async Task Execute()
         {
+            System.Net.ServicePointManager.DefaultConnectionLimit = 100;
+
             var virtualUsers = CreateVirtualUsers();
 
             using (var cancellationToken = new CancellationTokenSource())
