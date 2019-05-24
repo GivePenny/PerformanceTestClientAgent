@@ -5,11 +5,12 @@
       <LangVersion>latest</LangVersion>
       <Authors>GivePenny</Authors>
       <Description>Performance Test Client Agent is a lightweight .NET Standard class library for generating load in performance testing.</Description>
-      <Copyright>2018, Raising Technology Ltd</Copyright>
+      <Copyright>2019, Raising Technology Ltd</Copyright>
       <PackageProjectUrl>https://github.com/GivePenny/PerformanceTestClientAgent</PackageProjectUrl>
       <PackageLicenseUrl>https://github.com/GivePenny/PerformanceTestClientAgent/blob/master/License.md</PackageLicenseUrl>
       <RepositoryUrl>https://github.com/GivePenny/PerformanceTestClientAgent</RepositoryUrl>
       <RepositoryType>GitHub</RepositoryType>
+    <PackageIconUrl>https://secure.gravatar.com/avatar/96b7defc765a3a242e00557bb65d37ef?s=256</PackageIconUrl>
   </PropertyGroup>
 
   <ItemGroup>

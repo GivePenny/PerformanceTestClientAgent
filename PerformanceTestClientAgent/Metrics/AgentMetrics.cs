@@ -29,7 +29,7 @@ namespace PerformanceTestClientAgent.Metrics
             if (settings.SelectedProfile == null)
             {
                 throw new ArgumentException(
-                    $"The {nameof(TestSettings.UseProfileWithName)} property does not point to a configured test profile.", nameof(settings));
+                    $"The {nameof(TestSettings.UseProfileWithName)} property value '{settings.UseProfileWithName}' does not point to a configured test profile. Configured profiles are: [{string.Join(", ",settings.Profiles.Keys)}]", nameof(settings));
             }
 
             reportEvery = settings.SelectedProfile.ReportToConsoleEvery;
